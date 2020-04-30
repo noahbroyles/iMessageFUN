@@ -50,21 +50,27 @@ if __name__ == "__main__":
     elif len(args) >= 3:
         appleID = args[-1]
         if spam == "--bible":
-            if "-v" in args:
-                sendList(getVerses("theBible.txt"), appleID, verbose=True)
+            if "-c" in args:
+                amount = int(args[args.index("-c") + 1])
+                if "-v" in args:
+                    sendList(getVerses("theBible.txt")[:amount], appleID, verbose=True)
+                else:
+                    sendList(getVerses("theBible.txt")[:amount], appleID)
             else:
-                sendList(getVerses("theBible.txt"), appleID)
+                if "-v" in args:
+                    sendList(getVerses("theBible.txt"), appleID, verbose=True)
+                else:
+                    sendList(getVerses("theBible.txt"), appleID)
         if spam == "--random":
             if "-c" not in args:
                 amount = random.randint(1, 1000)
             else:
-                cdex = args.index("-c")
-                amount = int(args[cdex + 1])
+                amount = int(args[args.index("-c") + 1])
             messages = []
             for _ in range(amount):
                 message = ''
                 for __ in range(random.randint(10, 300)):
-                    message += random.choice(list(string.ascii_letters))
+                    message += random.choice(list("\n" + string.ascii_letters + " "))
                 messages.append(message)
             if "-v" in args:
                 sendList(messages, appleID, verbose=True)
