@@ -4,28 +4,30 @@ from nlp import *
 
 def runAppleScript(applescript):
     arguments = [item for x in [("-e", l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
-    subprocess.Popen(["osascript"] + arguments, stdout=subprocess.PIPE)
+    proc = subprocess.Popen(["osascript"] + arguments, stdout=subprocess.PIPE)
+    proc.stdout.read()
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
     num = 1
-    for m in listOfStrings:
-        # Leyla is the inspiration for this program, FYI ;)
-        script = '''
-        on run
-        	tell application "Messages"
-        		set iMessageService to 1st service whose service type = iMessage
-        		set leyla to buddy "''' + appleIDorPhone + '''" of iMessageService
-        		send "''' + m + '''" to leyla
-        	end tell
-        end run'''
-        if verbose:
+    try:
+        for m in listOfStrings:
+            # Leyla is the inspiration for this program, FYI ;)
+            script = '''
+            on run
+                tell application "Messages"
+                    set iMessageService to 1st service whose service type = iMessage
+                    set leyla to buddy "''' + appleIDorPhone + '''" of iMessageService
+                    send "''' + m + '''" to leyla
+                end tell
+            end run'''
             runAppleScript(script)
-            print("Sent {} spam message{} to {}".format(num, '' if num == 1 else "s", appleIDorPhone))
+            if verbose:
+                print("Sent {} spam message{} to {}".format(num, '' if num == 1 else "s", appleIDorPhone))
             num += 1
-        else:
-            runAppleScript(script)
-            num += 1
+    except KeyboardInterrupt:
+        print("Total spam messages sent to {}: {}".format(appleIDorPhone, num))
+        sys.exit()
 
 
 if __name__ == "__main__":
@@ -48,9 +50,9 @@ if __name__ == "__main__":
         print("\n" + options + "\n")
         sys.exit()
     if len(args) == 1:
-        print("Um... That doesn't work.")
+        print("\n" + options + "\n")
     elif len(args) == 2:
-        print("Please specify a phone number / apple ID to '" + spam.replace("--", '') + "'")
+        print("\n" + options + "\n")
     elif len(args) >= 3:
         appleID = args[-1]
         verbose = True if "-v" in args else False
