@@ -1,7 +1,8 @@
 # iMessage*FUN*
 *A lil program for spamming via iMessage*  
 <br>
-This is a pretty cool little tool! Lots of things are possible with it. You can spam send bible verses to people, send utterly random texts to people, or send parts from a specified file to them. You could send a whole movie script one word at a time!
+This is a pretty cool little tool! Lots of things are possible with it. You can spam send bible verses to people, send utterly random texts to people, or send parts from a specified file to them. You could send a whole movie script one word at a time!  
+This **ONLY WORKS ON MACOS** by the way, since iMessages and AppleScript are Apple things. Linux bros, I'm sorry. I can't help it. Windows people get lost.
 <br>
 <br>
 ## First Use:
@@ -23,13 +24,27 @@ These are the options for the spammer:
 -s --from-file <text file>     send each sentence in the file
 -l --from-file <text file>     send each line in the file
 ```
+Now in order for the spammer to work, the Messages app has to be *open* on your Mac, and there needs to be an existing chat with the person you are targeting. If either of these conditions are not met, 
+you will see something nasty like
+```commandline
+151:330: execution error: Messages got an error: Can’t get buddy id "74E7EF7C-DFEB-425F-91E5-1847C90995B3:+18633086223". (-1728)
+```  
+Well, now you know what that is.
 So for example, running:
+```commandline
+python3 iMessageSpam.py -v -c 2 --random <phone# or appleID>
 ```
-python3 iMessageSpam.py -v -c 2 --random <phone # or appleID>
-```
-would send 2 random messages to `<phone # or appleID>` and print:
+would send 2 random messages to `<phone# or appleID>` and print:
 ```plaintext
 Sent 1 spam message to 8633086227
 Sent 2 spam messages to 8633086227
 ```
-
+because it's in verbose mode. Running:
+```commandline
+python3 iMessageSpam.py --bible <phone# or appleID>
+```
+would send as many verses are are in the bible to `<phone# or appleID>` silently, or stop when you press `Ctrl-C`.  
+```commandline
+python3 iMessageSpam.py -l --from-file README.md <phone# or appleID>
+```
+would send each line from `README.md`(this file) to `<phone# or appleID>`. 
