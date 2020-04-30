@@ -1,5 +1,6 @@
 # iMessage*FUN*
-*A lil program for spamming via iMessage*
+*A lil program for spamming via iMessage*  
+This is a pretty cool little tool! Lots of things are possible with it. You can spam send bible verses to people, send utterly random texts to people, or send parts from a specified file to them(You could send a whole movie script one word at a time!)
 <br>
 <br>
 ## First Use:
@@ -16,7 +17,7 @@ These are the options for the spammer:
 -v (verbose)    prints a tally of spam messages sent
 -c <number>     specify a set number of messages to send
 --bible         sends spam from the Word of God
---random        random crap spam
+--random        sends random crap spam
 -w --from-file <text file>     send each word in the specified file
 -s --from-file <text file>     send each sentence in the file
 -l --from-file <text file>     send each line in the file
