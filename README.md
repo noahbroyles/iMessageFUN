@@ -20,9 +20,9 @@ These are the options for the spammer:
 -c <number>                     specify a set number of messages to send
 --bible                         sends spam from the Word of God
 --random                        sends random crap spam
--w --from-file <text file>     send each word in the specified file
--s --from-file <text file>     send each sentence in the file
--l --from-file <text file>     send each line in the file
+-w --from-file <text file>      send each word in the specified file
+-s --from-file <text file>      send each sentence in the file
+-l --from-file <text file>      send each line in the file
 ```
 Now in order for the spammer to work, the Messages app has to be *open* on your Mac, and there needs to be an existing chat with the person you are targeting. If either of these conditions are not met, 
 you will see something nasty like
