@@ -27,7 +27,7 @@ These are the options for the spammer:
 Now in order for the spammer to work, the Messages app has to be *open* on your Mac, and there needs to be an existing chat with the person you are targeting. If either of these conditions are not met, 
 you will see something nasty like
 ```commandline
-151:330: execution error: Messages got an error: Can’t get buddy id "74E7EF7C-DFEB-425F-91E5-1847C90995B3:+18633086223". (-1728)
+151:330: execution error: Messages got an error: Can’t get buddy id "74E7EF7C-DFEB-425F-91E5-1847C90995B3:<phone# or appleID>". (-1728)
 ```  
 Well, now you know what that is.
 So for example, running:
@@ -36,8 +36,8 @@ python3 iMessageSpam.py -v -c 2 --random <phone# or appleID>
 ```
 would send 2 random messages to `<phone# or appleID>` and print:
 ```plaintext
-Sent 1 spam message to 8633086227
-Sent 2 spam messages to 8633086227
+Sent 1 spam message to <phone# or appleID>
+Sent 2 spam messages to <phone# or appleID>
 ```
 because it's in verbose mode. Running:
 ```commandline
