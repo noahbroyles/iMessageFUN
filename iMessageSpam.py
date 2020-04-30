@@ -30,13 +30,13 @@ def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
 
 if __name__ == "__main__":
     options = """OPTIONS:
-    -v (verbose)    prints a tally of spam messages sent
-    -c <number>     specify a set number of messages to send
-    --bible         sends spam from the Word of God
-    --random        random crap spam
-    -w --from-file <text file>     send each word in the specified file
-    -s --from-file <text file>     send each sentence in the file
-    -l --from-file <text file>     send each line in the file"""
+    -v (verbose)                    prints a tally of spam messages sent
+    -c <number>                     specify a set number of messages to send
+    --bible                         sends spam from the Word of God
+    --random                        random crap spam
+    -w --from-file <text file>      send each word in the specified file
+    -s --from-file <text file>      send each sentence in the file
+    -l --from-file <text file>      send each line in the file"""
     import sys
     import random
     import string
