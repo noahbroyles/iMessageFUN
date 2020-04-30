@@ -2,11 +2,9 @@ import subprocess
 from nlp import *
 
 
-def runAppleScript(applescript, verbose=False):
+def runAppleScript(applescript):
     args = [item for x in [("-e", l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
     proc = subprocess.Popen(["osascript"] + args, stdout=subprocess.PIPE)
-    progname = proc.stdout.read().strip()
-    # print(str(progname))
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
