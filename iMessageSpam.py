@@ -20,20 +20,13 @@ def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
         	end tell
         end run'''
         if verbose:
-            try:
-                runAppleScript(script)
-                print("Sent {} spam message{} to {}".format(num, '' if num == 1 else "s", appleIDorPhone))
-                num += 1
-            except KeyboardInterrupt:
-                print("Okay we're done.")
-                sys.exit()
+            runAppleScript(script)
+            print("Sent {} spam message{} to {}".format(num, '' if num == 1 else "s", appleIDorPhone))
+            num += 1
         else:
-            try:
-                runAppleScript(script)
-                num += 1
-            except KeyboardInterrupt:
-                print("Okay we're done.")
-                sys.exit()
+            runAppleScript(script)
+            num += 1
+
 
 if __name__ == "__main__":
     options = """OPTIONS:
