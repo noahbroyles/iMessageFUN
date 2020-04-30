@@ -3,8 +3,8 @@ from nlp import *
 
 
 def runAppleScript(applescript):
-    args = [item for x in [("-e", l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
-    proc = subprocess.Popen(["osascript"] + args, stdout=subprocess.PIPE)
+    arguments = [item for x in [("-e", l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
+    subprocess.Popen(["osascript"] + arguments, stdout=subprocess.PIPE)
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
