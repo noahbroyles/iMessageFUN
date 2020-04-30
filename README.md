@@ -16,10 +16,10 @@ Now you are ready to spam the daylights out of people!
 ## How to Run:
 These are the options for the spammer:
 ```plaintext
--v (verbose)    prints a tally of the number of spam messages sent
--c <number>     specify a set number of messages to send
---bible         sends spam from the Word of God
---random        sends random crap spam
+-v (verbose)                    prints a tally of the number of spam messages sent
+-c <number>                     specify a set number of messages to send
+--bible                         sends spam from the Word of God
+--random                        sends random crap spam
 -w --from-file <text file>     send each word in the specified file
 -s --from-file <text file>     send each sentence in the file
 -l --from-file <text file>     send each line in the file
