@@ -10,7 +10,7 @@ def runAppleScript(applescript, verbose=False):
         print(str(progname))
 
 
-def sendList(listOfStrings: list, appleIDorPhone: str):
+def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
     for message in listOfStrings:
         # Leyla is the inspiration for this program, FYI ;)
         script = '''
@@ -21,23 +21,52 @@ def sendList(listOfStrings: list, appleIDorPhone: str):
         		send "''' + message + '''" to leyla
         	end tell
         end run'''
-        runAppleScript(script)
+        if verbose:
+            runAppleScript(script, verbose=True)
+        else:
+            runAppleScript(script)
 
 
 if __name__ == "__main__":
     """To be called like so: python3 iMessageSpam.py --bible <phone number or apple ID>"""
+    """OPTIONS: -c <count>
+                -v (verbose) 
+                --bible 
+                --random 
+                --from-file <file>"""
     import sys
+    import random
+    import string
 
     args = sys.argv
     try:
         spam = [arg for arg in args if arg.startswith("--")][0]
     except IndexError:
-        sys.exit("To be called like so: python3 iMessageSpam.py --bible <phone number or apple ID>")
+        sys.exit("Ya did it wrong.")
     if len(args) == 1:
         print("Um... That doesn't work.")
     elif len(args) == 2:
         print("Please specify a phone number / apple ID to '" + spam.replace("--", '') + "'")
-    elif len(args) == 3:
+    elif len(args) >= 3:
         appleID = args[-1]
         if spam == "--bible":
-            sendList(getVerses("theBible.txt"), appleID)
+            if "-v" in args:
+                sendList(getVerses("theBible.txt"), appleID, verbose=True)
+            else:
+                sendList(getVerses("theBible.txt"), appleID)
+        if spam == "--random":
+            if "-c" not in args:
+                amount = random.randint(1, 1000)
+            else:
+                cdex = args.index("-c")
+                amount = int(args[cdex + 1])
+            messages = []
+            for _ in range(amount):
+                message = ''
+                for __ in range(random.randint(10, 300)):
+                    message += random.choice(list(string.ascii_letters))
+                messages.append(message)
+            if "-v" in args:
+                sendList(messages, appleID, verbose=True)
+            else:
+                sendList(messages, appleID)
