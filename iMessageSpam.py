@@ -11,14 +11,14 @@ def runAppleScript(applescript, verbose=False):
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
-    for message in listOfStrings:
+    for m in listOfStrings:
         # Leyla is the inspiration for this program, FYI ;)
         script = '''
         on run
         	tell application "Messages"
         		set iMessageService to 1st service whose service type = iMessage
         		set leyla to buddy "''' + appleIDorPhone + '''" of iMessageService
-        		send "''' + message + '''" to leyla
+        		send "''' + m + '''" to leyla
         	end tell
         end run'''
         if verbose:
@@ -28,12 +28,15 @@ def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
 
 
 if __name__ == "__main__":
-    """To be called like so: python3 iMessageSpam.py --bible <phone number or apple ID>"""
-    """OPTIONS: -c <count>
-                -v (verbose) 
-                --bible 
-                --random 
-                --from-file <file>"""
+    options = """OPTIONS:
+    -c <number of messages to send>
+    -v (verbose) 
+    --bible 
+    --random 
+    --from-file <text file>
+        -w  send each word in the specified file
+        -s  send each sentence in the file
+        -l  send each line in the file"""
     import sys
     import random
     import string
@@ -42,37 +45,36 @@ if __name__ == "__main__":
     try:
         spam = [arg for arg in args if arg.startswith("--")][0]
     except IndexError:
-        sys.exit("Ya did it wrong.")
+        print("\n" + options + "\n")
+        sys.exit()
     if len(args) == 1:
         print("Um... That doesn't work.")
     elif len(args) == 2:
         print("Please specify a phone number / apple ID to '" + spam.replace("--", '') + "'")
     elif len(args) >= 3:
         appleID = args[-1]
+        verbose = True if "-v" in args else False
+        amount = int(args[args.index("-c") + 1]) if "-c" in args else False
         if spam == "--bible":
-            if "-c" in args:
-                amount = int(args[args.index("-c") + 1])
-                if "-v" in args:
-                    sendList(getVerses("theBible.txt")[:amount], appleID, verbose=True)
-                else:
-                    sendList(getVerses("theBible.txt")[:amount], appleID)
+            if amount:
+                sendList(getVerses("theBible.txt")[:amount], appleID, verbose=verbose)
             else:
-                if "-v" in args:
-                    sendList(getVerses("theBible.txt"), appleID, verbose=True)
-                else:
-                    sendList(getVerses("theBible.txt"), appleID)
-        if spam == "--random":
-            if "-c" not in args:
+                sendList(getVerses("theBible.txt"), appleID, verbose=verbose)
+        elif spam == "--random":
+            if not amount:
                 amount = random.randint(1, 1000)
-            else:
-                amount = int(args[args.index("-c") + 1])
             messages = []
             for _ in range(amount):
                 message = ''
                 for __ in range(random.randint(10, 300)):
                     message += random.choice(list("\n" + string.ascii_letters + " "))
                 messages.append(message)
-            if "-v" in args:
-                sendList(messages, appleID, verbose=True)
-            else:
-                sendList(messages, appleID)
+            sendList(messages, appleID, verbose=verbose)
+        elif spam == "--from-file":
+            file = args[args.index("--from-file") + 1]
+            if "-w" in args:
+                sendList(getWords(file), appleID, verbose=verbose)
+            elif "-s" in args:
+                sendList(getSentences(file), appleID, verbose=verbose)
+            elif "-l" in args:
+                sendList(getLines(file), appleID, verbose=verbose)
