@@ -55,6 +55,10 @@ if __name__ == "__main__":
         print("\n" + HELP + "\n")
     elif len(args) >= 3:
         appleID = args[-1]
+        for x in appleID:
+            if x not in string.digits:
+                if '@' not in appleID:
+                    sys.exit("error: Invalid AppleID or Phone number: {}".format(appleID))
         try:
             flags = [x for x in args if x.startswith("-") and not x.startswith("--") if len(x) > 2][0]
         except IndexError:
