@@ -32,7 +32,7 @@ you will see something nasty like
 Well, now you know what that is.
 So for example, running:
 ```commandline
-python3 iMessageSpam.py -v -c 2 --random <phone# or appleID>
+python3 iMessageSpam.py -vc 2 --random <phone# or appleID>
 ```
 would send 2 random messages to `<phone# or appleID>` and print:
 ```plaintext
@@ -45,6 +45,6 @@ python3 iMessageSpam.py --bible <phone# or appleID>
 ```
 would send as many verses are are in the bible to `<phone# or appleID>` silently, or stop when you press `Ctrl-C`.  
 ```commandline
-python3 iMessageSpam.py -l --from-file README.md <phone# or appleID>
+python3 iMessageSpam.py -vl --from-file README.md <phone# or appleID>
 ```
-would send each line from `README.md`(this file) to `<phone# or appleID>`. 
+would send each line from `README.md`(this file) to `<phone# or appleID>`, _and_ tell you as it sends.
