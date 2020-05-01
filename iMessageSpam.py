@@ -9,7 +9,7 @@ def runAppleScript(applescript):
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
-    num = 1
+    num = 0
     try:
         for m in listOfStrings:
             # Leyla is the inspiration for this program, FYI ;)
@@ -22,16 +22,16 @@ def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
                 end tell
             end run'''
             runAppleScript(script)
+            num += 1
             if verbose:
                 print("Sent {} spam message{} to {}".format(num, '' if num == 1 else "s", appleIDorPhone))
-            num += 1
     except KeyboardInterrupt:
         print("Total spam messages sent to {}: {}".format(appleIDorPhone, num))
         sys.exit()
-
+    print("Total spam messages sent to {}: {}".format(appleIDorPhone, num))
 
 if __name__ == "__main__":
-    options = """OPTIONS:
+    HELP = """OPTIONS:
     -v (verbose)                    prints a tally of spam messages sent
     -c <number>                     specify a set number of messages to send
     --bible                         sends spam from the Word of God
@@ -47,16 +47,20 @@ if __name__ == "__main__":
     try:
         spam = [arg for arg in args if arg.startswith("--")][0]
     except IndexError:
-        print("\n" + options + "\n")
+        print("\n" + HELP + "\n")
         sys.exit()
     if len(args) == 1:
-        print("\n" + options + "\n")
+        print("\n" + HELP + "\n")
     elif len(args) == 2:
-        print("\n" + options + "\n")
+        print("\n" + HELP + "\n")
     elif len(args) >= 3:
         appleID = args[-1]
-        verbose = True if "-v" in args else False
-        numberOfSpams = int(args[args.index("-c") + 1]) if "-c" in args else False
+        try:
+            flags = [x for x in args if x.startswith("-") and not x.startswith("--") if len(x) > 2][0]
+        except IndexError:
+            flags = []
+        verbose = True if ("-v" in args) or ("v" in flags) else False
+        numberOfSpams = int(args[args.index("-c") + 1]) if "-c" in args else int(args[args.index(flags) + 1]) if "c" in flags else False
         if spam == "--bible":
             if numberOfSpams:
                 sendList(getVerses("theBible.txt")[:numberOfSpams], appleID, verbose=verbose)
@@ -74,17 +78,17 @@ if __name__ == "__main__":
             sendList(messages, appleID, verbose=verbose)
         elif spam == "--from-file":
             file = args[args.index("--from-file") + 1]
-            if "-w" in args:
+            if "-w" in args or "w" in flags:
                 if numberOfSpams:
                     sendList(getWords(file)[:numberOfSpams], appleID, verbose=verbose)
                 else:
                     sendList(getWords(file), appleID, verbose=verbose)
-            elif "-s" in args:
+            elif "-s" in args or "s" in flags:
                 if numberOfSpams:
                     sendList(getSentences(file)[:numberOfSpams], appleID, verbose=verbose)
                 else:
                     sendList(getSentences(file), appleID, verbose=verbose)
-            elif "-l" in args:
+            elif "-l" in args or "l" in flags:
                 if numberOfSpams:
                     sendList(getLines(file)[:numberOfSpams], appleID, verbose=verbose)
                 else:
