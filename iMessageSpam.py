@@ -59,6 +59,9 @@ if __name__ == "__main__":
             if x not in string.digits:
                 if '@' not in appleID:
                     sys.exit("error: Invalid AppleID or Phone number: {}".format(appleID))
+            else:
+                if len(appleID) != 10 or len(appleID) != 11:
+                    sys.exit("error: Invalid AppleID or Phone number: {}".format(appleID))
         try:
             flags = [x for x in args if x.startswith("-") and not x.startswith("--") if len(x) > 2][0]
         except IndexError:
