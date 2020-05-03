@@ -5,7 +5,7 @@ from nlp import *
 def runAppleScript(applescript):
     arguments = [item for x in [("-e", l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
     proc = subprocess.Popen(["osascript"] + arguments, stdout=subprocess.PIPE)
-    proc.stdout.read()
+    proc.stdout.flush()
 
 
 def sendList(listOfStrings: list, appleIDorPhone: str, verbose=False):
