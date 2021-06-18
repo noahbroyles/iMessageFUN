@@ -1,4 +1,3 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/noahbroyles/iMessageFUN/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/noahbroyles/iMessageFUN?targetFile=requirements.txt)
 
 # iMessage*FUN*
 *A lil program for spamming via iMessage*  
